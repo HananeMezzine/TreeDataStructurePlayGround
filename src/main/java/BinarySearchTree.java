@@ -3,9 +3,9 @@ import java.util.Iterator;
 import lombok.Getter;
 import lombok.Setter;
 
-public class BinarySearchTree<K>
+public class BinarySearchTree<K extends Comparable<K>>
         implements Tree<K, Node<K>>, Iterable<Node<K>> {
-    private Node<K> root;
+    private BstNode<K> root;
 
     @Override
     public void insert(K key) {
@@ -17,7 +17,11 @@ public class BinarySearchTree<K>
 
     @Override
     public Node<K> find(K key) {
-        return null;
+        BstNode<K> result = root;
+        while (result != null && !key.equals(result.key)) {
+            result = key.compareTo(result.key) < 0 ? result.leftChild : result.rightChild;
+        }
+        return result;
     }
 
     @Override
