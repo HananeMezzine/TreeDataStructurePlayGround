@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class BinarySearchTree<K extends Comparable<K>>
-        implements Tree<K, Node<K>>, Iterable<Node<K>> {
+        implements Tree<K, BinarySearchTree<K>.BstNode<K>>, Iterable<BinarySearchTree<K>.BstNode<K>> {
     private BstNode<K> root;
 
     @Override
@@ -16,7 +16,7 @@ public class BinarySearchTree<K extends Comparable<K>>
     }
 
     @Override
-    public Node<K> find(K key) {
+    public BstNode<K> find(K key) {
         BstNode<K> result = root;
         while (result != null && !key.equals(result.key)) {
             result = key.compareTo(result.key) < 0 ? result.leftChild : result.rightChild;
@@ -25,47 +25,82 @@ public class BinarySearchTree<K extends Comparable<K>>
     }
 
     @Override
-    public Node<K> getSuccessor(K key) {
+    public BstNode<K> getSuccessor(K key) {
+        BstNode<K> node = find(key);
+        if (node == null) {
+            return null;
+        }
+
+        if (node.rightChild != null) {
+            return getMinimum(node.rightChild);
+        }
+
+        BstNode<K> successor = node.parent;
+        while (successor != null && successor.leftChild != node) {
+            node = successor;
+            successor = successor.parent;
+        }
+
+        return successor;
+    }
+
+    @Override
+    public BstNode<K> getPredecessor(K key) {
+
+
         return null;
     }
 
     @Override
-    public Node<K> getPredecessor(K key) {
-        return null;
+    public BstNode<K> getMinimum() {
+        return getMinimum(root);
+    }
+
+    private BstNode<K> getMinimum(BstNode<K> node) {
+        BstNode<K> min = root;
+        while (min != null) {
+            min = min.leftChild;
+        }
+        return min;
     }
 
     @Override
-    public Node<K> getMinimum() {
-        return null;
+    public BstNode<K> getMaximum() {
+        BstNode<K> max = root;
+        while (max != null) {
+            max = max.rightChild;
+        }
+        return max;
     }
 
     @Override
-    public Node<K> getMaximum() {
-        return null;
-    }
-
-    @Override
-    public int getHeight() {
+    public int getDepth(BstNode<K> node) {
         return 0;
     }
 
     @Override
-    public Iterator<Node<K>> iterator() {
+    public int getHeight(BstNode<K> node) {
+        return 0;
+    }
+
+
+    @Override
+    public Iterator<BstNode<K>> iterator() {
         return new InOrderIterator();
     }
 
-    public Iterator<Node<K>> getPreOrderIterator() {
-        return null;
+    public Iterator<BstNode<K>> getPreOrderIterator() {
+        return new PreOrderIterator();
     }
 
-    public Iterator<Node<K>> getPostOrderIterator() {
-        return null;
+    public Iterator<BstNode<K>> getPostOrderIterator() {
+        return new PostOrderIterator();
     }
 
 
     @Getter
     @Setter
-    private class BstNode<K> extends Node<K> {
+    class BstNode<K> extends Node<K> {
         private BstNode<K> leftChild;
         private BstNode<K> rightChild;
         private BstNode<K> parent;
@@ -76,50 +111,41 @@ public class BinarySearchTree<K extends Comparable<K>>
         public BstNode(K key) {
             super(key);
         }
-
-        @Override
-        public int getHeight() {
-            return 0;
-        }
-        @Override
-        public int getDepth() {
-            return 0;
-        }
     }
 
     private class InOrderIterator
-            implements Iterator<Node<K>> {
+            implements Iterator<BstNode<K>> {
 
         public boolean hasNext() {
             return false;
         }
 
-        public Node<K> next() {
+        public BstNode<K> next() {
             return null;
         }
     }
 
     private class PreOrderIterator
-            implements Iterator<Node<K>> {
+            implements Iterator<BstNode<K>> {
 
         public boolean hasNext() {
             return false;
         }
 
-        public Node<K> next() {
+        public BstNode<K> next() {
             return null;
         }
 
     }
 
     private class PostOrderIterator
-            implements Iterator<Node<K>> {
+            implements Iterator<BstNode<K>> {
 
         public boolean hasNext() {
             return false;
         }
 
-        public Node<K> next() {
+        public BstNode<K> next() {
             return null;
         }
 
