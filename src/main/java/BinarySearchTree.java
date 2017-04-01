@@ -69,7 +69,7 @@ public class BinarySearchTree<K extends Comparable<K>>
     }
 
     private BstNode<K> getMinimum(BstNode<K> node) {
-        BstNode<K> min = root;
+        BstNode<K> min = node;
         while (min != null) {
             min = min.leftChild;
         }
