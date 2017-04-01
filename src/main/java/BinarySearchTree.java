@@ -90,12 +90,15 @@ public class BinarySearchTree<K extends Comparable<K>>
     }
 
     @Override
-    public int getDepth(BstNode<K> node) {
+    public int getHeight() {
         return 0;
     }
 
-    @Override
-    public int getHeight(BstNode<K> node) {
+    private int getDepth(BstNode<K> node) {
+        return 0;
+    }
+
+    private int getHeight(BstNode<K> node) {
         return 0;
     }
 
