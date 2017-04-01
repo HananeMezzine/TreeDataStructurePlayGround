@@ -10,5 +10,6 @@ public interface Tree<K, N> {
     N getMinimum();
     N getMaximum();
 
-    int getHeight();
+    int getHeight(N node);
+    int getDepth(N node);
 }

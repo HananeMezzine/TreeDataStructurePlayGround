@@ -9,6 +9,4 @@ public abstract class Node<K> {
         this.key = key;
     }
 
-    public abstract int getHeight();
-    public abstract int getDepth();
 }
