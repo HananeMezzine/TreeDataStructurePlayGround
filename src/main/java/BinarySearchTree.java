@@ -46,9 +46,21 @@ public class BinarySearchTree<K extends Comparable<K>>
 
     @Override
     public BstNode<K> getPredecessor(K key) {
+        BstNode<K> node = find(key);
+        if (node == null) {
+            return null;
+        }
 
+        if (node.leftChild != null) {
+            return getMaximum(node.leftChild);
+        }
 
-        return null;
+        BstNode<K> predecessor = node.parent;
+        while (predecessor != null && predecessor.rightChild != node) {
+            node = predecessor;
+            predecessor = predecessor.parent;
+        }
+        return predecessor;
     }
 
     @Override
@@ -66,7 +78,11 @@ public class BinarySearchTree<K extends Comparable<K>>
 
     @Override
     public BstNode<K> getMaximum() {
-        BstNode<K> max = root;
+        return getMaximum(root);
+    }
+
+    private BstNode<K> getMaximum(BstNode<K> node) {
+        BstNode<K> max = node;
         while (max != null) {
             max = max.rightChild;
         }
