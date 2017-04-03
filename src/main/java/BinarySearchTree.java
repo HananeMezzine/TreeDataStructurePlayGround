@@ -96,10 +96,6 @@ public class BinarySearchTree<K extends Comparable<K>>
         return getHeightRecursive(root);
     }
 
-    private int getDepth(BstNode<K> node) {
-        return 0;
-    }
-
     private int getHeightRecursive(BstNode<K> node) {
         if (node == null) return 0;
         return Math.max(getHeightRecursive(node.leftChild), getHeightRecursive(node.rightChild)) + 1;
@@ -124,6 +120,18 @@ public class BinarySearchTree<K extends Comparable<K>>
         return height;
     }
 
+    private int getDepth(BstNode<K> node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int depth = 1;
+        while (node.parent != null) {
+            depth++;
+            node = node.parent;
+        }
+        return depth;
+    }
 
     @Override
     public Iterator<BstNode<K>> iterator() {
