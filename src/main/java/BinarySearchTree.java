@@ -12,6 +12,30 @@ public class BinarySearchTree<K extends Comparable<K>>
 
     @Override
     public void insert(K key) {
+        BstNode<K> node = new BstNode<>(key);
+
+        if (root == null) {
+            root = node;
+            return;
+        }
+
+        BstNode<K> parent = root;
+        BstNode<K> temp = root;
+        while (temp != null) {
+            if (key.compareTo(temp.key) < 0) {
+                parent = temp;
+                temp = temp.leftChild;
+            } else {
+                temp = temp.rightChild;
+                parent = temp;
+            }
+        }
+
+        if (key.compareTo(parent.key) < 0) {
+            parent.leftChild = node;
+        } else {
+            parent.rightChild = node;
+        }
     }
 
     @Override
