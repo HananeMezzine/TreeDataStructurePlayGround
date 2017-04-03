@@ -1,10 +1,13 @@
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import lombok.Getter;
 import lombok.Setter;
 
 public class BinarySearchTree<K extends Comparable<K>>
         implements Tree<K, BinarySearchTree<K>.BstNode<K>>, Iterable<BinarySearchTree<K>.BstNode<K>> {
+
     private BstNode<K> root;
 
     @Override
@@ -89,17 +92,36 @@ public class BinarySearchTree<K extends Comparable<K>>
         return max;
     }
 
-    @Override
     public int getHeight() {
-        return 0;
+        return getHeightRecursive(root);
     }
 
     private int getDepth(BstNode<K> node) {
         return 0;
     }
 
-    private int getHeight(BstNode<K> node) {
-        return 0;
+    private int getHeightRecursive(BstNode<K> node) {
+        if (node == null) return 0;
+        return Math.max(getHeightRecursive(node.leftChild), getHeightRecursive(node.rightChild)) + 1;
+    }
+
+    private int getHeightIterative(BstNode<K> node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int height = 0;
+        Queue<BstNode<K>> queue = new LinkedList<>();
+        queue.offer(root);
+        while (queue.size() != 0) {
+            height++;
+            for (int i = 0; i < queue.size(); i++) {
+                BstNode<K> n = queue.poll();
+                if (n.leftChild != null) queue.offer(n.leftChild);
+                if (n.rightChild != null) queue.offer(n.rightChild);
+            }
+        }
+        return height;
     }
 
 
@@ -169,6 +191,4 @@ public class BinarySearchTree<K extends Comparable<K>>
         }
 
     }
-
-
 }
